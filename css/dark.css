@@ -1,0 +1,34 @@
+
+.dark body{
+    background-color: hsl(240deg 20% 12%);
+}
+
+.dark .drop_meu {
+    background-color: hsl(235deg 24% 19%);
+} 
+
+.dark .container{
+    background-image: url("/images/bg-desktop-dark.jpg");
+}
+
+.dark .drop_meu div{
+    border-color:#80808042;
+}
+
+.dark .sun{
+    display: block;
+}
+
+.dark .moon{
+    display: none;
+}
+
+.dark .input-text{
+    background-color:hsl(235deg 24% 19%) ;
+}
+
+.dark .drop_meu p{
+    color: white;
+}
+
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html id="html" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/todo.css" />
+    <link rel="stylesheet" href="./css/dark.css" />
+    <!-- Start Font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- End Font awesome -->
+
+    <!-- Start Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Afacad:wght@400;500&family=Agdasima:wght@700&family=Belanosima&family=Cairo:wght@300;600&family=Inter:wght@200;300;500&family=Josefin+Sans:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&family=Poppins:ital,wght@0,300;0,700;0,800;1,400&family=Roboto+Condensed:wght@300;400&family=Roboto:wght@300;400;500&family=Urbanist:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <!-- End Google Font -->
+    <title>Todo</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="todo">
+          <h1>TODO</h1>
+          <div id="dark">
+            <img id="moon" class="moon" src="./images/icon-moon.svg" alt="" />
+            <img class="none" src="./images/icon-sun.svg" alt="" />
+          </div>
+        </div>
+        <div class="selector">
+          <label id="error" class="error"> </label>
+          <div class="placeholder"></div>
+          <form id="form">
+            <input
+              id="input"
+              class="input-text"
+              type="text"
+              placeholder="Create a new todo..."
+            />
+          </form>
+        </div>
+        <div id="drop_meu" class="drop_meu">
+          <div id="tod's" class="teds"></div>
+          <div class="no_todo">No Todo</div>
+
+          <footer>
+            <div class="item">5 items left</div>
+            <div id="InComplete">In Completed</div>
+            <div class="center">
+              <div id="All" class="active">All</div>
+              <div id="Active">Active</div>
+              <div id="AllComplete">Complete</div>
+            </div>
+          </footer>
+        </div>
+
+        <div class="titis">Drag and drop to reorder list</div>
+      </div>
+    </div>
+
+    <script src="./JS/todo.js"></script>
+  </body>
+</html>
