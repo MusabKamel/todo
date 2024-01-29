@@ -10,6 +10,11 @@ const showAllCompleteElement = document.getElementById("AllComplete");
 const allTodoElement = document.getElementById("All");
 const nowTodoElement = document.querySelector(".no_todo");
 const InCompleteTodoElement = document.getElementById("InComplete");
+const CounterElement = document.getElementById("Counter");
+
+darkImgElement.onclick = function (e) {
+  htmlElement.classList.toggle("dark");
+};
 
 let databases = [];
 
@@ -18,12 +23,13 @@ function addId() {
   return id;
 }
 
-function addTodo(name) {
+function createTodo(name) {
   let todo = new Object();
   todo.name = name;
   todo.Complete = false;
   todo.id = addId();
   databases.push(todo);
+  CounterElement.innerHTML = databases.length;
   return todo;
 }
 
@@ -41,10 +47,11 @@ function verificationNewTodo() {
   }
 }
 
-function addTodoPage(todo) {
+function createTodoElement(todo) {
   const divNewTodo = document.createElement("div");
   const divCircle = document.createElement("div");
   const p = document.createElement("p");
+  p.classList.add("add");
   const deleteIcon = document.createElement("i");
   divNewTodo.appendChild(divCircle);
   divNewTodo.appendChild(p);
@@ -57,48 +64,39 @@ function addTodoPage(todo) {
   p.innerHTML = todo.name;
   newTodoElement.appendChild(divNewTodo);
   divNewTodo.setAttribute("id", todo.id);
-  noTodo();
-
-  deleteIcon.onclick = function (e) {
-    deleteTodoPage(divNewTodo);
-  };
-  divCircle.onclick = function (e) {
-    addCompletePage(divCircle, p, todo);
-  };
+  nowTodoElement.classList.add("none");
+  // event
+  divCircle.onclick = addCompletePage;
+  deleteIcon.onclick = deleteTodoPage;
   console.log(databases);
 }
 
-function noTodo() {
-  if (databases.length >= 1) {
-    nowTodoElement.classList.add("none");
-  }
-}
-
-function addCompletePage(Circle, p, todo) {
-  completeTodo(todo.id);
-  Circle.classList.toggle("check");
-  p.classList.toggle("Line_middle");
-  if (Circle.className != "circle check") {
+let addCompletePage = function (e) {
+  completeTodo(e.target.parentNode.id);
+  e.target.classList.toggle("check");
+  e.target.parentNode.children[1].classList.toggle("Line_middle");
+  if (e.target.parentNode.firstChild.className != "circle check") {
     IncompletenessTodo(todo.id);
   }
-}
+};
 
-function deleteTodoPage(deleteNewTodo) {
-  deleteTodo(deleteNewTodo.id);
-  deleteNewTodo.remove();
+let deleteTodoPage = function (e) {
+  deleteTodo(e.target.parentNode.id);
+  e.target.parentNode.remove();
   if (databases.length == 0) {
     nowTodoElement.classList.remove("none");
   }
-}
+};
 
 formElement.onsubmit = function (event) {
   event.preventDefault();
-  if (verificationNewTodo().valid == true) {
+  let validation = verificationNewTodo();
+  if (validation.valid == true) {
     errorInputElement.innerHTML = "";
-    addTodoPage(addTodo(newTodoInputElement.value));
+    createTodoElement(createTodo(newTodoInputElement.value));
     newTodoInputElement.value = "";
   } else {
-    errorInputElement.innerHTML = verificationNewTodo().error;
+    errorInputElement.innerHTML = validation.error;
   }
 };
 
@@ -117,6 +115,7 @@ function IncompletenessTodo(id) {
 function deleteTodo(id) {
   let Complete = databases.find((task) => task.id == id);
   let index = databases.indexOf(Complete);
+  CounterElement.innerHTML = databases.length - 1;
   databases.splice(index, 1);
 }
 
@@ -125,64 +124,40 @@ function getAllCompletedTodo() {
   return completed;
 }
 
-function showAllComplete() {
-  let allComplete = getAllCompletedTodo();
-  newTodoElement.innerHTML = "";
-
-  if (allComplete.length > 0) {
-    for (let i of allComplete) {
-      addTodoPage(i);
-    }
-  } else {
-    nowTodoElement.classList.remove("none");
-  }
-}
-
-
-
 function getAllIncompletenessTodo() {
   let inCompleted = databases.filter((task) => task.Complete == false);
   return inCompleted;
 }
 
-function showAllInComplete() {
-  let allInComplete = getAllIncompletenessTodo();
+function showTasks(tasks, numberTodo) {
   newTodoElement.innerHTML = "";
-  if (allInComplete.length > 0) {
-    for (let i of allInComplete) {
-      addTodoPage(i);
-    }
-  } else {
+  for (let i of tasks) {
+    createTodoElement(i);
+  }
+  CounterElement.innerHTML = numberTodo;
+  if (tasks.length == 0) {
     nowTodoElement.classList.remove("none");
   }
 }
 
-function allTodo() {
-  newTodoElement.innerHTML = "";
-  for (let i of databases) {
-    addTodoPage(i);
-  }
-}
+showAllCompleteElement.onclick = function (e) {
+  let CompletedTodo = getAllCompletedTodo();
+  addActive(showAllCompleteElement);
+  showTasks(CompletedTodo, CompletedTodo.length);
+};
+InCompleteTodoElement.onclick = function (e) {
+  let inCompletedTodo = getAllIncompletenessTodo();
+  addActive(InCompleteTodoElement);
+  showTasks(inCompletedTodo, inCompletedTodo.length);
+};
+allTodoElement.onclick = function (e) {
+  let allTodo = databases;
+  addActive(allTodoElement);
+  showTasks(allTodo, allTodo.length);
+};
 
-function addActive(active){
+function addActive(active) {
   let act = document.querySelector(".active");
   act.classList.remove("active");
   active.classList.add("active");
 }
-
-showAllCompleteElement.onclick = function (e) {
-  addActive(showAllCompleteElement);
-  showAllComplete();
-};
-InCompleteTodoElement.onclick = function (e) {
-  addActive(InCompleteTodoElement);
-  showAllInComplete();
-};
-allTodoElement.onclick = function (e) {
-  addActive(allTodoElement);
-  allTodo();
-};
-
-darkImgElement.onclick = function (e) {
-  htmlElement.classList.toggle("dark");
-};

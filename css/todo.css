@@ -212,11 +212,6 @@ footer div{
          background-image: url("/images/bg-mobile-light.jpg");
     }
 
-    footer .center{
-        
-    }
-    .item{}
-
     footer{
         display: grid;
         grid-template-columns: auto auto;
